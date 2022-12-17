@@ -223,7 +223,7 @@ async def broadcast(bot, message):
 
 
     else:
-        message.reply_text("you are not a authorised person to use this command")
+        await message.reply_text("you are not a authorised person to use this command")
 
     
 
