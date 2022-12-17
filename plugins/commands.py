@@ -193,7 +193,7 @@ async def showid(client, message):
     
        
 @Client.on_message(filters.command("send_group") & filters.private)
-async def broadcast(self, message):
+async def broadcast(bot:Client, message):
     user_id = message.from_user.id
     if user_id in AUTH_USERS:
         text = message.reply_to_message
