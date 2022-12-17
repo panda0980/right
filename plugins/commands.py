@@ -209,7 +209,7 @@ async def broadcast(bot, message):
                 if sent % 25 == 0:
                     await asyncio.sleep(1)
                 try:
-                    await message.copy(chat_id =chat["id"] ,reply_to_message_id = text.message_id)
+                    await text.copy(chat_id =chat["id"] )
                     sent += 1
                 except (PeerIdInvalid, ChannelInvalid):
                     failed += 1
