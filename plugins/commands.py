@@ -192,36 +192,40 @@ async def showid(client, message):
     
     
        
-@Client.on_message(filters.command("send_groups") & filters.private)      
-async def broadcas(self, message):
-    #broadcasting message to all groups
+@Client.on_message(filters.command("send_group") & filters.private)
+async def broadcast(self, message):
     user_id = message.from_user.id
-    
-    to_send = message.text.split(None, 1)
-    
     if user_id in AUTH_USERS:
-        if len(to_send) >= 2:
+        text = message.reply_to_message
+        groups = await db.get_all_chats()
+        if not text:
+            await message.reply_text("please reply to a message")
+            
+        else:
             failed = 0
             sent = 0
-            text = to_send[1] + "\n\n*This is a broadcast message."
             msg = await message.reply_text("sending broadcast...")
-            group = await db.get_all_chats()
-            async for chat in group:
+            async for chat in groups:
                 if sent % 25 == 0:
                     await asyncio.sleep(1)
                 try:
-                    if message.reply_to_message:
-                        await message.copy(chat["id"], text)
-                        sent += 1
+                    await message.send_message(chat["id"], text)
+                    sent += 1
                 except (PeerIdInvalid, ChannelInvalid):
                     failed += 1
+                    LOGGER .warning("Can't send broadcast to \"%s\" with id %s",
+                                   chat["title"], chat["id"])
             await msg.edit_text(
-            "Broadcast complete!\n"
-            f"{sent} groups succeed, {failed} groups failed to receive the message"
+                "Broadcast complete!\n"
+                f"{sent} groups succeed, {failed} groups failed to receive the message"
             )
-    else:
-        await message.reply_text ("you are not a right person to use this command")
 
+
+
+    else:
+        message.reply_text("you are not a authorised person to use this command")
+
+    
 
 
 
