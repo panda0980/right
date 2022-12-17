@@ -196,7 +196,7 @@ async def showid(client, message):
 async def broadcast(bot, message):
     user_id = message.from_user.id
     if user_id in AUTH_USERS:
-        text = message.reply_to_message.text
+        text = message.reply_to_message
         groups = await db.get_all_chats()
         if not message.reply_to_message:
             await message.reply_text("please reply to a message")
@@ -209,7 +209,7 @@ async def broadcast(bot, message):
                 if sent % 25 == 0:
                     await asyncio.sleep(1)
                 try:
-                    await bot.send_message(chat["id"],msg)
+                    await msg.copy(chat_id =chat["id"] ,reply_to_message_id = broadcast_msg.message_id)
                     sent += 1
                 except (PeerIdInvalid, ChannelInvalid):
                     failed += 1
