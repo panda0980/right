@@ -193,7 +193,7 @@ async def showid(client, message):
     
        
 @Client.on_message(filters.command("send_group") & filters.private)
-async def broadcast(bot:Client, message):
+async def broadcast(bot, message):
     user_id = message.from_user.id
     if user_id in AUTH_USERS:
         msg = message.reply_to_message.text
@@ -209,7 +209,7 @@ async def broadcast(bot:Client, message):
                 if sent % 25 == 0:
                     await asyncio.sleep(1)
                 try:
-                    await message.reply_text(chat["id"],text=msg)
+                    await bot.send_message(chat["id"],msg)
                     sent += 1
                 except (PeerIdInvalid, ChannelInvalid):
                     failed += 1
