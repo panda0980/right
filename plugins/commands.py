@@ -91,7 +91,6 @@ async def sts(Client, message):
         return
     await message.reply_text(
         text=f"**Total Users in bot server {await db.total_users_count()}`\n\n**Total groups in bot server{await db.total_chat_count()}`",
-        parse_mode="Markdown",
         quote=True,
     )
         
