@@ -235,7 +235,7 @@ async def chatlist(self, message):
         chatfile = "List of chats.\n"
         chat_lists = await db.get_all_chats()
         async for chat in chat_lists:
-            chatfile += "{} - ({})\n".format(chat["chat_name"],
+            chatfile += "{} - ({})\n".format(chat["title"],
                                              chat["chat_id"])
 
         with BytesIO(str.encode(chatfile)) as output:
