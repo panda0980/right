@@ -90,7 +90,7 @@ async def sts(Client, message):
         await message.delete()
         return
     await message.reply_text(
-        text=f"**Total Users in bot server {await db.total_users_count()}`\n\n**Total groups in bot server{await db.total_chat_count()}`",
+        text=f"**Total Users in bot server** {await db.total_users_count()}\n\n**Total groups in bot server**{await db.total_chat_count()}",
         quote=True,
     )
         
