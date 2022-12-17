@@ -196,9 +196,9 @@ async def showid(client, message):
 async def broadcast(bot, message):
     user_id = message.from_user.id
     if user_id in AUTH_USERS:
-        msg = message.reply_to_message.text
+        text = message.reply_to_message.text
         groups = await db.get_all_chats()
-        if not msg:
+        if not message.reply_to_message:
             await message.reply_text("please reply to a message")
             
         else:
